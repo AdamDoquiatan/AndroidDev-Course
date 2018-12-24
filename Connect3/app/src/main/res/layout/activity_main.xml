@@ -25,11 +25,79 @@
 
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/pos1"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="4dp"
-            app:srcCompat="@drawable/red" />
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos2"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos3"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos4"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos5"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos6"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="12dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos7"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos8"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:onClick="handlePos" />
+
+        <ImageView
+            android:id="@+id/pos9"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:onClick="handlePos" />
+
+
+
+
     </android.support.v7.widget.GridLayout>
 </android.support.constraint.ConstraintLayout>
