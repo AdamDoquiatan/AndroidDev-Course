@@ -2,6 +2,7 @@ package com.adamdoq.connect3;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -126,24 +127,12 @@ public class MainActivity extends AppCompatActivity {
         resetButton.setAlpha(0);
         resetButton.setEnabled(false);
 
-        ImageView position = findViewById(R.id.pos1);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos2);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos3);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos4);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos5);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos6);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos7);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos8);
-        position.setImageDrawable(null);
-        position = findViewById(R.id.pos9);
-        position.setImageDrawable(null);
+        GridLayout gridLayout = findViewById(R.id.gridLayout);
+
+        for(int i=0; i<gridLayout.getChildCount(); i++) {
+            ImageView childPos = (ImageView) gridLayout.getChildAt(i);
+            childPos.setImageDrawable(null);
+        }
 
         for(int i = 0; i < 9; i++) {
             boardPos.put("pos" + i, "empty");
