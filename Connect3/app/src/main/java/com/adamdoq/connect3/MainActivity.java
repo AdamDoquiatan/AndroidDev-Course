@@ -4,27 +4,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    boolean winnerFound = false;
+
     String currentTurn = "red";
 
-    Map<String, String> turnsTaken = new HashMap<>();
+    Map<String, String> boardPos = new HashMap<>();
 
     private void populateHashMap() {
-        turnsTaken.put("pos1", "empty");
-        turnsTaken.put("pos2", "empty");
-        turnsTaken.put("pos3", "empty");
-        turnsTaken.put("pos4", "empty");
-        turnsTaken.put("pos5", "empty");
-        turnsTaken.put("pos6", "empty");
-        turnsTaken.put("pos7", "empty");
-        turnsTaken.put("pos8", "empty");
-        turnsTaken.put("pos9", "empty");
+        boardPos.put("pos1", "empty");
+        boardPos.put("pos2", "empty");
+        boardPos.put("pos3", "empty");
+        boardPos.put("pos4", "empty");
+        boardPos.put("pos5", "empty");
+        boardPos.put("pos6", "empty");
+        boardPos.put("pos7", "empty");
+        boardPos.put("pos8", "empty");
+        boardPos.put("pos9", "empty");
     }
 
     private void setTags() {
@@ -39,24 +43,113 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.pos9).setTag("pos9");
     }
 
-
-
     public void handlePos(View view) {
-        ImageView position = (ImageView) view;
+        if (!winnerFound) {
+            ImageView position = (ImageView) view;
 
-        if(turnsTaken.get(position.getTag().toString()).equals("empty")) {
-           if (currentTurn.equals("red")) {
-               position.setImageResource(R.drawable.red);
-               turnsTaken.put(position.getTag().toString(), "red");
-               currentTurn = "yellow";
-           } else {
-               position.setImageResource(R.drawable.yellow);
-               turnsTaken.put(position.getTag().toString(), "yellow");
-               currentTurn = "red";
-           }
-           position.setTranslationY(-2000);
-           position.animate().translationYBy(2000).setDuration(350);
-       }
+            if (boardPos.get(position.getTag().toString()).equals("empty")) {
+                if (currentTurn.equals("red")) {
+                    position.setImageResource(R.drawable.red);
+                    boardPos.put(position.getTag().toString(), "red");
+                    currentTurn = "yellow";
+                } else {
+                    position.setImageResource(R.drawable.yellow);
+                    boardPos.put(position.getTag().toString(), "yellow");
+                    currentTurn = "red";
+                }
+                position.setTranslationY(-2000);
+                position.animate().translationYBy(2000).setDuration(350);
+
+                checkWin();
+            }
+        }
+    }
+
+    private void checkWin() {
+        String checkColor = "red";
+
+        for (int i = 0; i < 2; i++) {
+            if (boardPos.get("pos1").equals(checkColor)
+                    && boardPos.get("pos2").equals(checkColor)
+                    && boardPos.get("pos3").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos4").equals(checkColor)
+                    && boardPos.get("pos5").equals(checkColor)
+                    && boardPos.get("pos6").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos7").equals(checkColor)
+                    && boardPos.get("pos8").equals(checkColor)
+                    && boardPos.get("pos9").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos1").equals(checkColor)
+                    && boardPos.get("pos4").equals(checkColor)
+                    && boardPos.get("pos7").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos2").equals(checkColor)
+                    && boardPos.get("pos5").equals(checkColor)
+                    && boardPos.get("pos8").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos3").equals(checkColor)
+                    && boardPos.get("pos6").equals(checkColor)
+                    && boardPos.get("pos9").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos1").equals(checkColor)
+                    && boardPos.get("pos5").equals(checkColor)
+                    && boardPos.get("pos9").equals(checkColor)) {
+                victory(checkColor);
+            } else if (boardPos.get("pos3").equals(checkColor)
+                    && boardPos.get("pos5").equals(checkColor)
+                    && boardPos.get("pos7").equals(checkColor)) {
+                victory(checkColor);
+            }
+            checkColor = "yellow";
+        }
+        checkColor = "red";
+    }
+
+    private void victory(String winner) {
+        winnerFound = true;
+        TextView victoryText = findViewById(R.id.victoryText);
+        victoryText.setAlpha(1);
+        victoryText.setText("" + winner + " wins!");
+
+        Button resetButton = findViewById(R.id.resetButton);
+        resetButton.setAlpha(1);
+        resetButton.setEnabled(true);
+    }
+
+    public void reset(View view) {
+        TextView victoryText = findViewById(R.id.victoryText);
+        victoryText.setAlpha(0);
+
+        Button resetButton = findViewById(R.id.resetButton);
+        resetButton.setAlpha(0);
+        resetButton.setEnabled(false);
+
+        ImageView position = findViewById(R.id.pos1);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos2);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos3);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos4);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos5);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos6);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos7);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos8);
+        position.setImageDrawable(null);
+        position = findViewById(R.id.pos9);
+        position.setImageDrawable(null);
+
+        for(int i = 0; i < 9; i++) {
+            boardPos.put("pos" + i, "empty");
+        }
+
+        winnerFound = false;
     }
 
     @Override

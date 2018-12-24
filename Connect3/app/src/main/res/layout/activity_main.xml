@@ -7,14 +7,14 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="368dp"
         android:layout_height="368dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@drawable/board"
         app:columnCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,40 @@
             android:onClick="handlePos" />
 
 
-
-
     </android.support.v7.widget.GridLayout>
+
+    <TextView
+        android:id="@+id/victoryText"
+        android:layout_width="106dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginLeft="163dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="163dp"
+        android:layout_marginRight="163dp"
+        android:alpha="0"
+        android:gravity="center_vertical|center_horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/resetButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="105dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
+        android:layout_marginEnd="150dp"
+        android:layout_marginRight="150dp"
+        android:alpha="0"
+        android:enabled="false"
+        android:onClick="reset"
+        android:text="Play Again"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/victoryText" />
+
 </android.support.constraint.ConstraintLayout>
