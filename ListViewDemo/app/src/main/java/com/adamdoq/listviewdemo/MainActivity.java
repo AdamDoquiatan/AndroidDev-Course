@@ -16,15 +16,10 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         ListView myListView = findViewById(R.id.myListView);
 
@@ -42,14 +37,5 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Hello " + friends.get(position), Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-
-
-
-
-
     }
 }
