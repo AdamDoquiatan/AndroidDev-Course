@@ -1,13 +1,17 @@
 package com.adamdoq.braintrainer;
 
+import android.os.CountDownTimer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -15,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
     static final int TIME_LIMIT = 30;
 
-    boolean gameEnabled = false;
-    int totalScore = 0;
-    int totalQuestions = 1;
-    int answerPos;
+    private boolean gameEnabled = false;
+    private int totalScore = 0;
+    private int totalQuestions = 0;
+    private int answerPos;
 
     ConstraintLayout masterLayout;
     GridLayout infoLayout;
@@ -26,22 +30,21 @@ public class MainActivity extends AppCompatActivity {
 
     TextView countDownText;
     TextView scoreText;
-
-
-
+    TextView feedbackText;
 
     public void select(View view) {
-        if(view.getTag().toString().equals("select" + (answerPos - 1) +"View")) {
-            Log.i("Yes", "Right");
-        } else {
-            Log.i("No", "Wrong");
-        }
+        feedbackText.setVisibility(View.VISIBLE);
 
+        if(view.getTag().toString().equals("select" + (answerPos + 1) + "View")) {
+            feedbackText.setText("Right! :D");
+            totalScore++;
+        } else {
+            feedbackText.setText("Wrong! D:");
+        }
+        startRound();
     }
 
     public void startRound() {
-
-        Log.i("Info", "hi");
         totalQuestions++;
         scoreText.setText(String.valueOf(totalScore) + "/" + String.valueOf(totalQuestions));
 
@@ -71,11 +74,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 selectTexts[i].setText(String.valueOf(rand.nextInt(41)));
             }
-
-
         }
-
-
     }
 
 
@@ -100,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
             gameEnabled = true;
         }
 
-        View startText = findViewById(R.id.startInfoText);
+        final View feedbackText = findViewById(R.id.feedbackText);
         View replayButton = findViewById(R.id.replayButton);
-        startText.setVisibility(View.INVISIBLE);
+        feedbackText.setVisibility(View.INVISIBLE);
         replayButton.setVisibility(View.INVISIBLE);
 
         totalScore = 0;
@@ -110,8 +109,30 @@ public class MainActivity extends AppCompatActivity {
 
         countDownText.setText(String.valueOf(TIME_LIMIT) + 's');
         scoreText.setText(String.valueOf(totalScore) + "/" + String.valueOf(totalQuestions));
-        Log.i("Info", "hi");
+
+        new CountDownTimer(30000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countDownText.setText(millisUntilFinished / 1000 + "s");
+            }
+
+            @Override
+            public void onFinish() {
+                TextView feedbackText = findViewById(R.id.feedbackText);
+                feedbackText.setText("You got: " + totalScore + "/" + totalQuestions + " right!");
+                Button replayButton = findViewById(R.id.replayButton);
+                replayButton.setVisibility(View.VISIBLE);
+                replayButton.setEnabled(true);
+            }
+        }.start();
+
         startRound();
+    }
+
+    public void replay(View view) {
+        view.setEnabled(false);
+        startGame(view);
     }
 
     @Override
@@ -125,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
 
         countDownText = findViewById(R.id.countDownText);
         scoreText = findViewById(R.id.scoreText);
+        feedbackText = findViewById(R.id.feedbackText);
     }
 
 
