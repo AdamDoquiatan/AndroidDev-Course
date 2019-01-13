@@ -1,37 +1,52 @@
 package com.adamdoq.whatstheweather;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
     String result;
+    TextView text;
 
     public void getWeather(View view) {
 
         DownloadTask task = new DownloadTask();
         TextView textView = findViewById(R.id.cityInput);
-        String city = textView.getText().toString();
+
 
         try {
+            String city = URLEncoder.encode(textView.getText().toString(), "UTF-8");
             task.execute("https://openweathermap.org/data/2.5/weather?q=" + city + "&appid=b6907d289e10d714a6e88b30761fae22").get();
 
+            InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            mgr.hideSoftInputFromWindow(text.getWindowToken(), 0);
         } catch (ExecutionException e) {
+            Toast.makeText(MainActivity.this, "Could not find weather :(", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         } catch (InterruptedException e) {
+            Toast.makeText(MainActivity.this, "Could not find weather :(", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            Toast.makeText(MainActivity.this, "Could not find weather :(", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -41,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        text = findViewById(R.id.weatherResult);
     }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
@@ -62,10 +78,12 @@ public class MainActivity extends AppCompatActivity {
                     JSON += current;
                     data = reader.read();
                 }
-                return "It worked!";
+                return null;
             } catch(Exception e) {
+
+                Toast.makeText(MainActivity.this, "Could not find weather :(", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
-                return "It didn't work!";
+                return null;
             }
         }
 
@@ -82,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject jsonPart = arr.getJSONObject(i);
                     result = jsonPart.getString("main");
                     result +=" : " + jsonPart.getString("description");
-                    TextView text = findViewById(R.id.weatherResult);
                     text.setText(result);
                 }
             } catch(Exception e) {
+                Toast.makeText(MainActivity.this, "Could not find weather :(", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }
