@@ -48,5 +48,3 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(galway, 7));
     }
 }
-
-// 53.2838294,-9.1888286
