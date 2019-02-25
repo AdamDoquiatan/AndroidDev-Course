@@ -71,6 +71,5 @@ public class MainActivity extends AppCompatActivity {
             // Get user's location
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         }
-        // Maybe add handling for when user denies permissions
     }
 }
